@@ -1,0 +1,17 @@
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { ArrowLeft, Check, CircleDashed } from 'lucide-react'
+import { SiteHeader } from '@/components/site-header'
+import { SiteFooter } from '@/components/site-footer'
+
+export const metadata: Metadata = { title: 'Platform status', robots: { index: false, follow: false } }
+const requirements = [
+  ['Database and accounts', 'Blocked: service discovery returned a tool validation error. Existing integrations must be checked before provisioning a database. No persistent data or authentication is implemented.'],
+  ['Property photos', 'Pending: verify existing storage or connect private Blob storage, then implement authenticated uploads and listing-aware image access.'],
+  ['Google Maps', 'Pending: securely configure a restricted browser API key and JavaScript map ID, then implement Maps and Places. No map SDK is loaded in this version.'],
+  ['Owner and tenant workflows', 'Pending: owner onboarding, listing CRUD, publishing, saved spaces, enquiries, visit requests, and request tracking require the verified backend.'],
+  ['Schema and acceptance checks', 'Pending: implement and review migrations, obtain permission before applying them, then test two-owner isolation, tenant privacy, upload access, and end-to-end persistence.'],
+]
+export default function SetupPage() {
+  return <><SiteHeader /><main id="main" className="shell max-w-4xl py-12"><Link href="/" className="text-link"><ArrowLeft className="size-4" />Back to ChaloPG</Link><h1 className="section-heading pt-8">An honest look at what&apos;s ready.</h1><p className="max-w-2xl pt-4 text-base leading-relaxed text-muted-foreground">This is the first implementation checkpoint—not a live rental marketplace. Service setup and backend implementation must be completed before collecting real owner or tenant data.</p><div className="pt-6"><a href="/downloads/chalopg-source.zip" download="chalopg-source.zip" className="inline-flex items-center rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90">Download source checkpoint ZIP</a><p className="pt-2 text-sm text-muted-foreground">Editable code, README, and packaging tools. Not the completed full-stack platform.</p></div><section className="py-8"><h2 className="flex items-center gap-3 text-lg font-semibold"><Check className="size-5 text-primary" />Built in this version</h2><p className="pt-3 text-sm leading-relaxed text-muted-foreground">Original responsive homepage, category and city discovery links, URL-backed filter controls, list/map unavailable states, account entry screens, safe entry redirects, and an editable source handover.</p></section><section className="flex flex-col gap-6 border-t py-8" aria-label="Outstanding requirements">{requirements.map(([title, detail]) => <div key={title} className="flex items-start gap-3"><CircleDashed className="mt-1 size-5 shrink-0 text-muted-foreground" /><div className="flex flex-col gap-2"><h2 className="text-base font-semibold">{title}</h2><p className="text-sm leading-relaxed text-muted-foreground">{detail}</p></div></div>)}</section><p className="rounded-xl bg-accent p-5 text-sm leading-relaxed text-accent-foreground">No payments, automated verification, SMS, or email notifications are included. Do not enter secrets in chat. Configure future credentials only through secure project environment setup.</p></main><SiteFooter /></>
+}
